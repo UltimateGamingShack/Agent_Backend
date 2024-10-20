@@ -26,10 +26,6 @@ import jakarta.servlet.http.HttpServletResponse;
 
 @Component
 public class JwtAuthenticationFilter extends OncePerRequestFilter {
-	private final String secretKey;
-	public JwtAuthenticationFilter(String secretKey) {
-		this.secretKey = secretKey;
-	}
 	@Autowired
 	private HandlerExceptionResolver handlerExceptionResolver;
 	@Autowired

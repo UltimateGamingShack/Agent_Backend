@@ -87,7 +87,7 @@ public class AgentController {
 		return new ResponseEntity<>(loginResponse, HttpStatus.CREATED);
 	}
 	
-	@PostMapping(value="/agent/auth/login")
+	@PostMapping(value="/agent/auth/loginMpin")
 	@CircuitBreaker(name="agentService", fallbackMethod="loginAgentByMpinFallBack")
 	public ResponseEntity<LoginResponse> loginAgentByMpin(@Valid @RequestBody MpinDTO mpinDTO) throws NewGenAgentException{
 		AgentDTO agentDTO = agentService.loginAgentByMpin(mpinDTO);

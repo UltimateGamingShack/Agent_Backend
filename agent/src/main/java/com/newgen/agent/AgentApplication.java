@@ -20,7 +20,7 @@ public class AgentApplication {
 	}
 	
 	@Bean
-	ModelMapper mpdelMapper() {
+	ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 }
