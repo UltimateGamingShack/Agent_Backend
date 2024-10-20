@@ -1,0 +1,43 @@
+server:
+  port: 9200
+
+spring:
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/agent_db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: agent
+  cloud:
+    consul:
+      host: localhost
+      discovery:
+        hostname: localhost
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      agentService:
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        minimum-number-of-calls: 10
+        sliding-window-type: count-based
+        wait-duration-in-open-state: 60s
+        permitted-number-of-calls-in-half-open-state: 3
+
+## MESSAGES
+Service:
+  AGENT_NOT_FOUND: Agent could not be found...!
+  INVALID_CREDENTIALS: The entered credentials are invalid!
+  AGENT_ALREADY_EXISTS: Agent already exists...!
+API:
+  AGENT_REGISTER_SUCCESS: Agent has successfully registered!
+  AGENT_LOGIN_SUCCESS: Logged in successfully!
+General:
+  MESSAGE: Internal Server Error!
+  FALLBACK: Kindly try again later...!
