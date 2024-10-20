@@ -1,0 +1,46 @@
+server:
+  port: 9100
+
+spring:
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/customer_db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: customers
+  cloud:
+    consul:
+      host: localhost
+      discovery:
+        hostname: localhost
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      customerService:
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        minimum-number-of-calls: 10
+        sliding-window-type: count-based
+        wait-duration-in-open-state: 60s
+        permitted-number-of-calls-in-half-open-state: 3
+
+## MESSAGES
+Service:
+  CUSTOMERS_NOT_FOUND: Customers could not be found...!
+  CUSTOMER_NOT_FOUND: Customer does not exist...!
+  CUSTOMER_ALREADY_EXISTS: Customers already exists...!
+API:
+  CUSTOMER_ADDED_SUCCESSFULLY: Customer Successfully Added with ID 
+  CUSTOMER_DELETED_SUCCESSFULLY: Customer has been successfully deleted
+  CUSTOMER_EDIT_SUCCESS: Customer successfully edited!
+  POLICY_DELETED_SUCCESSFULLY: Policy has been successfully deleted!
+  POLICY_ADDED_SUCCESSFULLY: Policy has successfully been added!
+General:
+  MESSAGE: Internal Server Error!
+  FALLBACK: Kindly try again later...!
