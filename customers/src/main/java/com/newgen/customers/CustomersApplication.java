@@ -27,7 +27,7 @@ public class CustomersApplication {
 	}
 	@Bean
 	String jwtSecretKey() {
-		return environment.getProperty("security.jwt-secret-key");
+		return environment.getProperty("security.jwt.secret-key");
 	}
 	@Bean
 	ModelMapper modelMapper() {

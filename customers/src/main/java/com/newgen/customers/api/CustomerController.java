@@ -50,7 +50,7 @@ public class CustomerController {
 	}
 	//******************************* CUSTOMER CONTROLLERS *************************************
 	
-	@GetMapping("/customers/{agentId")
+	@GetMapping("/customers/{agentId}")
 	public ResponseEntity<List<CustomerDTO>> getCustomersByAgentId(@PathVariable Integer agentId) throws NewGenCustomersException{
 		List<CustomerDTO> customers = custService.getCustomersByAgentId(agentId);
 		customers = customers.stream().map(customer -> {
