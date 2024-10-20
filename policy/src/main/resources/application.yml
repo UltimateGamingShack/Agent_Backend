@@ -1,0 +1,40 @@
+server:
+  port: 9300
+
+spring:
+  datasource:
+    driver-class-name:  com.mysql.cj.jdbc.Driver
+    url: jdbc:mysql://localhost:3306/policy_db
+    username: root
+    password: root
+  jpa:
+    hibernate:
+      ddl-auto: update
+  application:
+    name: policy
+  cloud:
+    consul:
+      host: localhost
+      discovery:
+        hostname: localhost
+
+resilience4j:
+  circuitbreaker:
+    instances:
+      policyService:
+        failure-rate-threshold: 50
+        sliding-window-size: 10
+        automatic-transition-from-open-to-half-open-enabled: true
+        minimum-number-of-calls: 10
+        sliding-window-type: count-based
+        wait-duration-in-open-state: 60s
+        permitted-number-of-calls-in-half-open-state: 3
+
+## MESSAGES
+Service:
+  POLICY_NOT_FOUND: Policy could not be found!
+API:
+  POLICY_RENEWED_SUCCESSFULLY: Policy has successfully been renewed!
+General:
+  MESSAGE: Internal Server Error!
+  FALLBACK: Kindly try again later...!
