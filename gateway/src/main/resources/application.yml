@@ -1,0 +1,41 @@
+server:
+  port: 9500
+
+spring:
+  application:
+    name: gateway
+  cloud:
+    consul:
+      host: localhost
+      config:
+        enabled: false
+    gateway:
+      default-filters:
+      -  DedupeResponseHeader=Access-Control-Allow-Credentials Access-Control-Allow-Origin
+      discovery:
+        locator:
+          enabled: true
+      routes:
+        - id: agent
+          uri: lb://agent
+          predicates:
+          - Path=/newgenagent/agent/**
+        - id: customers
+          uri: lb://customers
+          predicates:
+            - Path=/newgenagent/customers/**
+        - id: policy
+          uri: lb://policy
+          predicates:
+          - Path=/newgenagent/policy/**
+
+      globalcors:
+        cors-configurations:
+          '[/**]':
+            allowedOrigins: "http://localhost:3000"
+            allowedHeaders: "*"
+            allowedMethods:
+            - GET
+            - POST
+            - PUT
+            - DELETE
